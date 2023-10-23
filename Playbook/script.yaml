@@ -1,0 +1,39 @@
+---
+
+- host: 192.168.20.18
+  become: true
+  
+  task:
+  - name: update and upgrade server
+    apt:
+      update_cache: yes
+      upgrade: yes
+
+  task:
+  - name: Create a cron job to check the server's uptime every 12 am.
+    cron:
+      name: Create a cron job to check the server's uptime every 12 am.
+      minuute: "0"
+      hour: "0"
+      day: "*"
+      month: "*"
+      weekday: "*"
+      job: "user/bin/uptime > /var/bin/uptime_check.log 2>&1"
+      state: present
+
+  task:
+  - name: copy bash script to a slave machine
+    copy:
+      src: laravel_1.sh
+      dest: ~/
+      owner: root
+      group: root
+      mode: 744
+
+  task:
+  - name: Set permissions to execute bash scrit
+    command: chmod +x ~/laravel_1.sh
+
+  task:
+  - name: Execute bash script
+    command: bash laravel_1.sh chinazor nazor93 < /dev/null
