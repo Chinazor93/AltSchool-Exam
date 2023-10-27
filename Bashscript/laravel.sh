@@ -117,6 +117,3 @@ php artisan config:cache
 php artisan migrate
 
 
-# restart apache2
-sudo systemctl restart apache2
-
